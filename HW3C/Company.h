@@ -9,6 +9,7 @@ typedef struct
 	char*		name;
 	int			flightCount;
 	Flight**	flightArr;
+	LIST		allDates;
 }Company;
 
 void	initCompany(Company* pComp);

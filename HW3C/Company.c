@@ -11,6 +11,7 @@ void	initCompany(Company* pComp)
 	pComp->name = getStrExactName("Enter company name");
 	pComp->flightArr = NULL;
 	pComp->flightCount = 0;
+	L_init(&pComp->allDates);
 }
 
 int	addFlight(Company* pComp, const AirportManager* pManager)
@@ -36,6 +37,8 @@ void printCompany(const Company* pComp)
 	printf("Company %s:\n", pComp->name);
 	printf("Has %d flights\n", pComp->flightCount);
 	printFlightArr(pComp->flightArr, pComp->flightCount);
+	printf("The filgts that are not repetetive are on dates:\n");
+	L_print(&pComp->allDates, printDate);
 }
 
 void	printFlightsCount(const Company* pComp)

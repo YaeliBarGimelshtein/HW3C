@@ -19,5 +19,6 @@ void	getAirportName(Airport* pPort);
 void	changeEvenWord(char* str);
 void    getAirportCode(char* code);
 void	freeAirport(Airport* pPort);
+int		compareAirportsByCode(const Airport* pPort1, const Airport* pPort2);
 
 #endif

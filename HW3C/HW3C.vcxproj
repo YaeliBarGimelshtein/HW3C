@@ -130,6 +130,7 @@
     <ClInclude Include="Date.h" />
     <ClInclude Include="Flight.h" />
     <ClInclude Include="General.h" />
+    <ClInclude Include="LinkedList.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Airport.c" />
@@ -138,6 +139,7 @@
     <ClCompile Include="Date.c" />
     <ClCompile Include="Flight.c" />
     <ClCompile Include="General.c" />
+    <ClCompile Include="LinkedList.c" />
     <ClCompile Include="main.c" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

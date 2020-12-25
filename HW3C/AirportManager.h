@@ -3,10 +3,11 @@
 #define __AIR_MANAGER__
 
 #include "Airport.h"
+#include "LinkedList.h"
 
 typedef struct
 {
-	Airport*	arr;
+	LIST	arr;
 	int			count;
 }AirportManager;
 

@@ -76,6 +76,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -123,6 +124,21 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Airport.h" />
+    <ClInclude Include="AirportManager.h" />
+    <ClInclude Include="Company.h" />
+    <ClInclude Include="Date.h" />
+    <ClInclude Include="Flight.h" />
+    <ClInclude Include="General.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Airport.c" />
+    <ClCompile Include="AirportManager.c" />
+    <ClCompile Include="Company.c" />
+    <ClCompile Include="Date.c" />
+    <ClCompile Include="Flight.c" />
+    <ClCompile Include="General.c" />
+    <ClCompile Include="main.c" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -6,12 +6,10 @@
 #include "AirportManager.h"
 
 
-
 typedef enum
 {
 	eNotSorted, eHourSort, eDateSort,eDestenationCodeSort, eOriginCodeSort,eNumOfChoises
 } eSort;
-
 
 
 typedef struct
@@ -20,6 +18,7 @@ typedef struct
 	int			flightCount;
 	Flight**	flightArr;
 	LIST		allDates;
+	int			sorted;
 }Company;
 
 void	initCompany(Company* pComp);
@@ -31,6 +30,9 @@ void	freeFlightArr(Flight** arr, int size);
 void	freeCompany(Company* pComp);
 void	sortByWithComp(Company* pComp, int(*compareFunc)(const void*, const void*));
 void	sortBy(Company* pComp);
+void	searchBy(Company* pComp, AirportManager* pPort);
+Flight** findFlight(Flight* key, Company* pComp, int(*compareFunc)(const void*, const void*));
+void	generalArrayFunction(void* arr, int numOfElements, int sizeOfElement, void	f(void* element));
 
 #endif
 

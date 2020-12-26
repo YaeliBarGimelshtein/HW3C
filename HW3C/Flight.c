@@ -117,18 +117,15 @@ int compareFlightsByDate(const void* o1, const void* o2)
 
 	if (pFlight1->date.day == pFlight2->date.day && pFlight1->date.month == pFlight2->date.month && pFlight1->date.year == pFlight2->date.year)
 		return 0;
-
 	if (pFlight1->date.year > pFlight2->date.year)
 		return 1;
-	else
+	else if(pFlight1->date.year < pFlight2->date.year)
 		return -1;
-
-	if (pFlight1->date.month > pFlight2->date.month)
+	else if (pFlight1->date.month > pFlight2->date.month)
 		return 1;
-	else
+	else if(pFlight1->date.month < pFlight2->date.month)
 		return -1;
-
-	if (pFlight1->date.day > pFlight2->date.day)
+	else if (pFlight1->date.day > pFlight2->date.day)
 		return 1;
 
 	return -1;

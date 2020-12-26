@@ -12,6 +12,7 @@ void	initCompany(Company* pComp)
 	pComp->flightArr = NULL;
 	pComp->flightCount = 0;
 	L_init(&pComp->allDates);
+	pComp->sorted = eNotSorted;
 }
 
 int	addFlight(Company* pComp, const AirportManager* pManager)
@@ -118,21 +119,25 @@ void	sortBy(Company* pComp)
 	{
 	case eHourSort:
 		sortByWithComp(pComp, compareFlightsbyHour);
+		pComp->sorted = eHourSort;
 		printf("finished sorting\n");
 		break;
 
 	case eDateSort:
 		sortByWithComp(pComp, compareFlightsByDate);
+		pComp->sorted = eDateSort;
 		printf("finished sorting\n");
 		break;
 
 	case eDestenationCodeSort:
 		sortByWithComp(pComp, compareFlightsByDestCode);
+		pComp->sorted = eDestenationCodeSort;
 		printf("finished sorting\n");
 		break;
 
 	case eOriginCodeSort:
 		sortByWithComp(pComp, compareFlightsByOriginCode);
+		pComp->sorted = eOriginCodeSort;
 		printf("finished sorting\n");
 		break;
 
@@ -140,4 +145,85 @@ void	sortBy(Company* pComp)
 		printf("not a valid option\n");
 		break;
 	}
+}
+
+Flight**	findFlight(Flight* key,Company* pComp, int(*compareFunc)(const void*, const void*))
+{
+	return (Flight**) bsearch(&key,pComp->flightArr,pComp->flightCount,sizeof(Flight*),compareFunc);
+}
+
+
+void	searchBy(Company* pComp, AirportManager* pPort)
+{
+	if (pComp->sorted == eNotSorted)
+	{
+		printf("cant search an un sorted array\n");
+		return;
+	}
+
+	printf("enter the flight you are lokking for:\n");
+	Flight* flightToSearch=(Flight*)malloc(1*sizeof(Flight));
+	if (!flightToSearch)
+	{
+		printf("problem loading flight\n");
+		return;
+	}
+		
+	initFlight(flightToSearch, pPort);
+
+	Flight** answer;
+	
+	switch (pComp->sorted)
+	{
+	case eHourSort:
+		answer = findFlight(flightToSearch,pComp, compareFlightsbyHour);
+		if (!answer)
+			printf("flight not found\n");
+		else
+		{
+			printf("here is your flight\n");
+			printFlight(*answer);
+		}
+		
+		break;
+
+	case eDateSort:
+		answer = findFlight(flightToSearch, pComp, compareFlightsByDate);
+		if (!answer)
+			printf("flight not found\n");
+		else
+		{
+			printf("here is your flight\n");
+			printFlight(*answer);
+		}
+		
+		break;
+
+	case eDestenationCodeSort:
+		answer = findFlight(flightToSearch, pComp, compareFlightsByDestCode);
+		if (!answer)
+			printf("flight not found\n");
+		else
+		{
+			printf("here is your flight\n");
+			printFlight(*answer);
+		}
+		break;
+
+	case eOriginCodeSort:
+		answer = findFlight(flightToSearch, pComp, compareFlightsByOriginCode);
+		if (!answer)
+			printf("flight not found\n");
+		else
+		{
+			printf("here is your flight\n");
+			printFlight(*answer);
+		}
+		break;
+	}
+}
+
+void	generalArrayFunction(void* arr, int numOfElements, int sizeOfElement, void	f(void* element))
+{
+	
 }

@@ -7,12 +7,12 @@
 typedef enum
 {
 	eAddFlight, eAddAirport, ePrintCompany, ePrintAirports,
-	ePrintFlightOrigDest, eSortBy, eNofOptions
+	ePrintFlightOrigDest, eSortBy,eSearchBy, eNofOptions
 } eMenuOptions;
 
 const char* str[eNofOptions] = { "Add Flight", "Add Airport",
 								"PrintCompany", "Print all Airports",
-								"Print flights between origin-destination" , "Sort flights" };
+								"Print flights between origin-destination" , "Sort flights","Search flight" };
 
 #define EXIT			-1
 int menu();
@@ -58,6 +58,10 @@ int main()
 
 		case eSortBy:
 			sortBy(&company);
+			break;
+
+		case eSearchBy:
+			searchBy(&company,&manager);
 			break;
 
 		case EXIT:

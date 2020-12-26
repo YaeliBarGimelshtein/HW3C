@@ -21,38 +21,27 @@ int	initManager(AirportManager* pManager)
 	if (count == 0)
 		return 1;
 
-	//for (int i = 0; i < count; i++)
-	//	addAirport(pManager);
-
-
 
 	Airport* helper = (Airport*)malloc(count * sizeof(Airport));
 	if (helper == NULL)
 		return 0;
 
 	for (int i = 0; i < count; i++)
-		setAirport(&helper[i], pManager);
-	qsort(helper, count, sizeof(Airport), compareAirportsByCode); //array is sorted
-
-	NODE* helperList = &pManager->arr.head;
-
-	for (int i = 0; i < count; i++)
 	{
-		if (L_insert(helperList, &helper[i]) == NULL)
+		setAirport(&helper[i], pManager);
+		if (L_SortInsert(&pManager->arr.head, &helper[i], compareAirportsByCode) == NULL)
 			return 0;
-		helperList = helperList->next;
 	}
 	pManager->count = count;
 
-	//free(helper);
 	return 1;
 }
 
 int	addAirport(AirportManager* pManager)
 {
-	Airport airport;
-	setAirport(&airport, pManager);
-	if (L_insert(&pManager->arr.head,&airport) != NULL)
+	Airport* airport=(Airport*)malloc(1*sizeof(Airport));
+	setAirport(airport, pManager);
+	if (L_SortInsert(&pManager->arr.head,airport,compareAirportsByCode)!=NULL)
 	{
 		pManager->count++;
 		return 1;

@@ -20,8 +20,11 @@ int		countFlightsInRoute(Flight** arr, int size, const char* codeSource, const c
 void	printFlight(const Flight* pFlight);
 int		getFlightHour();
 Airport*	setAiportToFlight(const AirportManager* pManager, const char* msg);
-
 void	freeFlight(Flight* pFlight);
+int compareFlightsbyHour(const void* o1, const void* o2);
+int compareFlightsByDestCode(const void* o1, const void* o2);
+int compareFlightsByOriginCode(const void* o1, const void* o2);
+int compareFlightsByDate(const void* o1, const void* o2);
 
 
 #endif

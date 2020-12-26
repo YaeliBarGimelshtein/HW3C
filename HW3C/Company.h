@@ -4,6 +4,16 @@
 
 #include "Flight.h"
 #include "AirportManager.h"
+
+
+
+typedef enum
+{
+	eNotSorted, eHourSort, eDateSort,eDestenationCodeSort, eOriginCodeSort,eNumOfChoises
+} eSort;
+
+
+
 typedef struct
 {
 	char*		name;
@@ -19,6 +29,8 @@ void	printFlightsCount(const Company* pComp);
 void	printFlightArr(Flight** pFlight, int size);
 void	freeFlightArr(Flight** arr, int size);
 void	freeCompany(Company* pComp);
+void	sortByWithComp(Company* pComp, int(*compareFunc)(const void*, const void*));
+void	sortBy(Company* pComp);
 
 #endif
 

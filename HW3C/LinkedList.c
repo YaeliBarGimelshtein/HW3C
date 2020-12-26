@@ -41,15 +41,20 @@ NODE* L_SortInsert(NODE* head, DATA value, int(*compareFunc)(const void*,const v
 		return L_insert(head, value);
 	
 	helper = head->next;
-	while (helper->next != NULL) //checks until the last one
+	while (helper != NULL) //checks until the last one
 	{
 		if(compareFunc(value, helper->key) < 0) //in case the smallest
 			return L_insert(head, value);
+
+		if (helper->next == NULL)
+			break;
 
 		if (compareFunc(value, helper->key)>0 && compareFunc(value, helper->next->key)<0) //any other case
 		{
 			return L_insert(helper, value);
 		}
+
+		
 		helper = helper->next;
 	}
 	//in case biggest
@@ -101,7 +106,6 @@ int L_print(LIST* pList, void(*print)(const void*))
 	if (!pList) 
 		return 0;
 
-	printf("\n");
 	tmp = pList->head.next;
 
 	while (tmp->next != NULL)

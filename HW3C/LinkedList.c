@@ -107,6 +107,8 @@ int L_print(LIST* pList, void(*print)(const void*))
 		return 0;
 
 	tmp = pList->head.next;
+	if (tmp == NULL)
+		return 0;
 
 	while (tmp->next != NULL)
 	{

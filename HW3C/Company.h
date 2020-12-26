@@ -22,6 +22,7 @@ typedef struct
 }Company;
 
 void	initCompany(Company* pComp);
+int		initCompanyFromFile(Company* pComp,FILE* fp);
 int		addFlight(Company* pComp, const AirportManager* pManager);
 void	printCompany(const Company* pComp);
 void	printFlightsCount(const Company* pComp);

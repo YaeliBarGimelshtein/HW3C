@@ -21,6 +21,24 @@ void	initFlight(Flight* pFlight, const AirportManager* pManager)
 	pFlight->hour = getFlightHour();
 }
 
+
+int	initFlightFromFile(Flight* pFlight,FILE* fp)
+{
+	if (fread(pFlight->originCode, sizeof(char), CODE_LENGTH + 1, fp) != CODE_LENGTH + 1)
+		return 0;
+	if (fread(pFlight->destCode, sizeof(char), CODE_LENGTH + 1, fp) != CODE_LENGTH + 1)
+		return 0;
+	if (fread(pFlight->hour, sizeof(int), 1, fp) != 1)
+		return 0;
+	if (fread(pFlight->date.day, sizeof(int), 1, fp) != 1)
+		return 0;
+	if (fread(pFlight->date.month, sizeof(int), 1, fp) != 1)
+		return 0;
+	if (fread(pFlight->date.year, sizeof(int), 1, fp) != 1)
+		return 0;
+	return 1;
+}
+
 int	isFlightInRoute(const Flight* pFlight, const char* codeSource, const char* codeDest)
 {
 	if ((strcmp(pFlight->originCode, codeSource) == 0) &&

@@ -15,6 +15,41 @@ void	initCompany(Company* pComp)
 	pComp->sorted = eNotSorted;
 }
 
+
+int	initCompanyFromFile(Company* pComp, FILE* fp)
+{
+	int len;
+	if (fread(&len, sizeof(int), 1, fp) != 1)
+		return 0;
+	
+	pComp->name = (char*)malloc(len * sizeof(char));
+
+	if (fread(pComp->name, sizeof(char), len, fp) != len)
+		return 0;
+
+	if (fread(&pComp->flightCount, sizeof(int), 1, fp) != 1)
+		return 0;
+
+	if (fread(&pComp->sorted, sizeof(int), 1, fp) != 1)
+		return 0;
+
+	L_init(&pComp->allDates);
+
+	pComp->flightArr = (Flight**)malloc(pComp->flightCount * sizeof(Flight*));
+	if (pComp->flightArr == NULL)
+		return 0;
+	
+	for (int i = 0; i < pComp->flightCount; i++)
+	{
+		pComp->flightArr[i]= (Flight*)malloc(pComp->flightCount * sizeof(Flight));
+		if (!pComp->flightArr[i])
+			return 0;
+		if (initFlightFromFile(pComp->flightArr[i], fp) == 0)
+			return 0;
+	}
+
+}
+
 int	addFlight(Company* pComp, const AirportManager* pManager)
 {
 	if (pManager->count < 2)

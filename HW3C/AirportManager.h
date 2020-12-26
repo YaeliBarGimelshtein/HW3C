@@ -12,6 +12,8 @@ typedef struct
 }AirportManager;
 
 int		initManager(AirportManager* pManager);
+int		initManagerFromFile(AirportManager* pManager, FILE* fp);
+int		setAirportFromFile(Airport* airport, FILE* fp);
 int		addAirport(AirportManager* pManager);
 void	setAirport(Airport* pPort, AirportManager* pManager);
 Airport* findAirportByCode(const AirportManager* pManager, const char* code);

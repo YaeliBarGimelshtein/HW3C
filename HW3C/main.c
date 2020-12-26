@@ -4,6 +4,10 @@
 #include "AirportManager.h"
 #include "General.h"
 
+
+#define TEXT_FILE "airport_authority.txt"
+#define BIN_FILE "company.bin"
+
 typedef enum
 {
 	eAddFlight, eAddAirport, ePrintCompany, ePrintAirports,
@@ -21,9 +25,22 @@ int main()
 {
 	AirportManager	manager;
 	Company			company;
+	
+	FILE* fManager = fopen(TEXT_FILE, "r");
+	FILE* fCompany = fopen(BIN_FILE, "rb");
 
-	initManager(&manager);
-	initCompany(&company);
+	if (!fManager || !fCompany)
+	{
+		initManager(&manager);
+		initCompany(&company);
+	}
+	else
+	{
+		initManagerFromFile(&manager, fManager);
+		int res=initCompanyFromFile(&company, fCompany);
+	}
+
+	
 
 	int option;
 	int stop = 0;

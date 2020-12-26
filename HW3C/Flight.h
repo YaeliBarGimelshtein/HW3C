@@ -15,6 +15,7 @@ typedef struct
 }Flight;
 
 void	initFlight(Flight* pFlight, const AirportManager* pManager);
+int		initFlightFromFile(Flight* pFlight, FILE* fp);
 int		isFlightInRoute(const Flight* pFlight, const char* codeSource, const char* codeDest);
 int		countFlightsInRoute(Flight** arr, int size, const char* codeSource, const char* codeDest);
 void	printFlight(const Flight* pFlight);

@@ -37,6 +37,44 @@ int	initManager(AirportManager* pManager)
 	return 1;
 }
 
+int		initManagerFromFile(AirportManager* pManager, FILE* fp)
+{
+	int res=fscanf(fp, "%d", &pManager->count);
+	if (res != 1)
+		return 0;
+
+	L_init(&pManager->arr);
+	char clean='a';
+	fscanf(fp, "%c", &clean);
+	Airport* helper = (Airport*)malloc(pManager->count * sizeof(Airport));
+	if (helper == NULL)
+		return 0;
+
+	for (int i = 0; i < pManager->count; i++)
+	{
+		int result=setAirportFromFile(&helper[i],fp);
+		if (!result)
+			return 0;
+		
+		if (L_SortInsert(&pManager->arr.head, &helper[i], compareAirportsByCode) == NULL)
+			return 0;
+	}
+	return 1;
+}
+
+int setAirportFromFile(Airport* airport,FILE* fp)
+{
+	airport->name=getStrExactNameFromFile( MAX_STR_LEN, fp);
+	airport->country=getStrExactNameFromFile(MAX_STR_LEN, fp);
+	int res=fscanf(fp, "%s", airport->code);
+	if (res == 1)
+		return 1;
+
+	return 0;
+}
+
+
+
 int	addAirport(AirportManager* pManager)
 {
 	Airport* airport=(Airport*)malloc(1*sizeof(Airport));

@@ -28,7 +28,15 @@ char* getDynStr(char* str)
 	return theStr;
 }
 
+char* getStrExactNameFromFile(int size, FILE* fp)
+{
+	char* str;
+	char temp[MAX_STR_LEN];
+	myGetsFile(temp, MAX_STR_LEN,fp);
 
+	str = getDynStr(temp);
+	return str;
+}
 
 char*  myGets(char* buffer, int size)
 {
@@ -43,6 +51,23 @@ char*  myGets(char* buffer, int size)
 	}
 	return NULL;
 }
+
+
+char*  myGetsFile(char* buffer, int size, FILE* fp)
+{
+	if (buffer != NULL && size > 0)
+	{
+		if (fgets(buffer, size, fp))
+		{
+			buffer[strcspn(buffer, "\n")] = '\0';
+			return buffer;
+		}
+		buffer[0] = '\0';
+	}
+	return NULL;
+}
+
+
 
 char**	splitCharsToWords(char* str, int* pCount, int* pTotalLength)
 {

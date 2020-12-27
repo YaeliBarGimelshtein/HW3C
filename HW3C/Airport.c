@@ -127,7 +127,7 @@ void	freeAirport(Airport* pPort)
 {
 	free(pPort->name);
 	free(pPort->country);
-	free(pPort); //????
+	free(pPort); 
 }
 
 int compareAirportsByCode(const Airport* pPort1, const Airport* pPort2)

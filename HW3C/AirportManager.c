@@ -64,11 +64,12 @@ int		initManagerFromFile(AirportManager* pManager, FILE* fp)
 
 int setAirportFromFile(Airport* airport,FILE* fp)
 {
-	char clean = 'a';
-	fscanf(fp, "%c", &clean);
+	
 	airport->name=getStrExactNameFromFile( MAX_STR_LEN, fp);
 	airport->country=getStrExactNameFromFile(MAX_STR_LEN, fp);
 	int res=fscanf(fp, "%s", airport->code);
+	char clean = 'a';
+	fscanf(fp, "%c", &clean);
 	if (res == 1)
 		return 1;
 	

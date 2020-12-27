@@ -72,6 +72,7 @@ int L_delete(NODE* pNode, void(*freeFunc)(void*))
 		return 0;
 
 	tmp = pNode->next;
+
 	if (!tmp)
 		return 0;
 
@@ -84,21 +85,24 @@ int L_delete(NODE* pNode, void(*freeFunc)(void*))
 
 int L_free(LIST* pList, void(*freeFunc)(void*))
 {
-	NODE *tmp;
-
+	NODE* head;
+	
 	if (!pList) 
 		return 0;
-	tmp = &(pList->head);
+	
+	head = &(pList->head);
+	if (head == NULL)
+		return 0;
+
 	int res = 1;
 	while (res)
 	{
-		res = L_delete(tmp, freeFunc);
+		res = L_delete(head, freeFunc);
 	}
-
 	return 1;
 }
 
-int L_print(LIST* pList, void(*print)(const void*))
+int L_print(const LIST* pList, void(*print)(const void*))
 {
 	NODE *tmp;
 	int	c = 0;
@@ -113,7 +117,6 @@ int L_print(LIST* pList, void(*print)(const void*))
 	while (tmp->next != NULL)
 	{
 		print(tmp->key);
-		printf("\n");
 		tmp = tmp->next;
 		c++;
 	}

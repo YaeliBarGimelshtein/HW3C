@@ -5,6 +5,7 @@
 #include "General.h"
 
 
+
 #define TEXT_FILE "airport_authority.txt"
 #define BIN_FILE "company.bin"
 
@@ -92,8 +93,9 @@ int main()
 		}
 	} while (!stop);
 
-	freeManager(&manager);
+	
 	freeCompany(&company);
+	freeManager(&manager);
 	return 1;
 }
 

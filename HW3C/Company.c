@@ -47,7 +47,7 @@ int	initCompanyFromFile(Company* pComp, FILE* fp)
 		if (initFlightFromFile(pComp->flightArr[i], fp) == 0)
 			return 0;
 	}
-
+	return 1;
 }
 
 int	addFlight(Company* pComp, const AirportManager* pManager)
@@ -85,6 +85,8 @@ void printCompany(const Company* pComp)
 	printf("Company %s:\n", pComp->name);
 	printf("Has %d flights\n", pComp->flightCount);
 	printFlightArr(pComp->flightArr, pComp->flightCount);
+	if (pComp->flightCount == 0)
+		return;
 	printf("The filgts that are not repetetive are on dates:\n");
 	L_print(&pComp->allDates, printDate);
 }

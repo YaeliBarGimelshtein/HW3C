@@ -28,13 +28,13 @@ int	initFlightFromFile(Flight* pFlight,FILE* fp)
 		return 0;
 	if (fread(pFlight->destCode, sizeof(char), CODE_LENGTH + 1, fp) != CODE_LENGTH + 1)
 		return 0;
-	if (fread(pFlight->hour, sizeof(int), 1, fp) != 1)
+	if (fread(&pFlight->hour, sizeof(int), 1, fp) != 1)
 		return 0;
-	if (fread(pFlight->date.day, sizeof(int), 1, fp) != 1)
+	if (fread(&pFlight->date.day, sizeof(int), 1, fp) != 1)
 		return 0;
-	if (fread(pFlight->date.month, sizeof(int), 1, fp) != 1)
+	if (fread(&pFlight->date.month, sizeof(int), 1, fp) != 1)
 		return 0;
-	if (fread(pFlight->date.year, sizeof(int), 1, fp) != 1)
+	if (fread(&pFlight->date.year, sizeof(int), 1, fp) != 1)
 		return 0;
 	return 1;
 }

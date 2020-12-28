@@ -148,6 +148,12 @@ void	sortByWithComp(Company* pComp, int(*compareFunc)(const void*, const void*))
 
 void	sortBy(Company* pComp)
 {
+	if (pComp->flightCount == 0)
+	{
+		printf("cant sort, no flights\n");
+		return;
+	}
+	
 	printf("press 1 to sort by hour, press 2 to sort by date, press 3 to sort by destenstion, press 4 to sort by origin\n");
 	int choise;
 	scanf("%d", &choise);
@@ -192,6 +198,12 @@ Flight**	findFlight(Flight* key,Company* pComp, int(*compareFunc)(const void*, c
 
 void	searchBy(Company* pComp, AirportManager* pPort)
 {
+	if (pComp->flightCount == 0)
+	{
+		printf("cant search, no flights\n");
+		return;
+	}
+
 	if (pComp->sorted == eNotSorted)
 	{
 		printf("cant search an un sorted array\n");

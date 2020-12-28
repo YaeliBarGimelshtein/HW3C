@@ -27,18 +27,19 @@ int main()
 	AirportManager	manager;
 	Company			company;
 	
-	FILE* fManager = fopen(TEXT_FILE, "r");
-	FILE* fCompany = fopen(BIN_FILE, "rb");
+	FILE* fManagerRead = fopen(TEXT_FILE, "r");
+	FILE* fCompanyRead = fopen(BIN_FILE, "rb");
+	
 
-	if (!fManager || !fCompany)
+	if (!fManagerRead || !fCompanyRead)
 	{
 		initManager(&manager);
 		initCompany(&company);
 	}
 	else
 	{
-		initManagerFromFile(&manager, fManager);
-		int res=initCompanyFromFile(&company, fCompany);
+		initManagerFromFile(&manager, fManagerRead);
+		int res=initCompanyFromFile(&company, fCompanyRead);
 	}
 
 	
@@ -92,10 +93,28 @@ int main()
 			break;
 		}
 	} while (!stop);
-
 	
-	freeCompany(&company);
+	fclose(fManagerRead);
+	fclose(fCompanyRead);
+
+	FILE* fManagerWrite = fopen(TEXT_FILE, "w");
+	FILE* fCompanyWrite = fopen(BIN_FILE, "wb");
+
+	wtireCompanyToFile(&company, fCompanyWrite);
+	writeManagerToFile(&manager, fManagerRead);
+	
+
+	fclose(fManagerWrite);
+	fclose(fCompanyWrite);
+	
+	
+
 	freeManager(&manager);
+	freeCompany(&company);
+
+
+
+
 	return 1;
 }
 

@@ -68,3 +68,13 @@ int compareDate(const Date* date1, const Date* date2)
 	
 	return -1;
 }
+
+void freeStrDate(char* date)
+{
+	free(date);
+}
+
+void printStrDate(const char* date)
+{
+	printf("%s\n",date);
+}

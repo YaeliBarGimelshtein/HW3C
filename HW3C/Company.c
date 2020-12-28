@@ -5,6 +5,7 @@
 #include "Airport.h"
 #include "General.h"
 
+
 void	initCompany(Company* pComp)
 {
 	printf("-----------  Init Airline Company\n");
@@ -47,6 +48,22 @@ int	initCompanyFromFile(Company* pComp, FILE* fp)
 		if (initFlightFromFile(pComp->flightArr[i], fp) == 0)
 			return 0;
 	}
+
+	char dateStr[MAX_STR_LEN];
+	for (int i = 0; i < pComp->flightCount - 1; i++)
+	{
+		for (int j=0; j < pComp->flightCount - 1; j++)
+		{
+			if (compareDate(&pComp->flightArr[pComp->flightCount - 1]->date, &pComp->flightArr[i]->date) != 0)
+				
+				sprintf(dateStr, "%d/%d/%d", pComp->flightArr[pComp->flightCount - 1]->date.day,
+				pComp->flightArr[pComp->flightCount - 1]->date.month,
+				pComp->flightArr[pComp->flightCount - 1]->date.year);
+
+				L_insert(&pComp->allDates.head, getDynStr(dateStr));
+		}
+	}
+
 	return 1;
 }
 
@@ -74,7 +91,14 @@ int	addFlight(Company* pComp, const AirportManager* pManager)
 				return 1;
 		}
 	}
-	L_insert(&pComp->allDates.head, &pComp->flightArr[pComp->flightCount-1]->date);
+	
+	char dateStr[MAX_STR_LEN];
+	sprintf(dateStr, "%d/%d/%d", pComp->flightArr[pComp->flightCount-1]->date.day,
+		pComp->flightArr[pComp->flightCount - 1]->date.month,
+		pComp->flightArr[pComp->flightCount - 1]->date.year);
+
+	
+	L_insert(&pComp->allDates.head, getDynStr(dateStr));
 	
 
 	return 1;
@@ -88,7 +112,7 @@ void printCompany(const Company* pComp)
 	if (pComp->flightCount == 0)
 		return;
 	printf("The filgts that are not repetetive are on dates:\n");
-	L_print(&pComp->allDates, printDate);
+	L_print(&pComp->allDates, printStrDate);
 }
 
 void printFlightsCount(const Company* pComp)
@@ -120,16 +144,12 @@ void printFlightsCount(const Company* pComp)
 
 void	printFlightArr(Flight** pFlight, int size)
 {
-	for (int i = 0; i < size; i++)
-		printFlight(pFlight[i]);
+	generalArrayFunction(pFlight, size, sizeof(Flight*), printFlight);
 }
 
 void	freeFlightArr(Flight** arr, int size)
 {
-	for (int i = 0; i < size; i++)
-	{
-		freeFlight(arr[i]);
-	}
+	generalArrayFunction(arr, size, sizeof(Flight*), freeFlight);
 }
 
 void	freeCompany(Company* pComp)
@@ -137,7 +157,7 @@ void	freeCompany(Company* pComp)
 	freeFlightArr(pComp->flightArr, pComp->flightCount);
 	free(pComp->flightArr);
 	free(pComp->name);
-	L_free(&pComp->allDates,NULL);
+	L_free(&pComp->allDates,freeStrDate);
 }
 
 void	sortByWithComp(Company* pComp, int(*compareFunc)(const void*, const void*))
@@ -210,7 +230,7 @@ void	searchBy(Company* pComp, AirportManager* pPort)
 		return;
 	}
 
-	printf("enter the flight you are lokking for:\n");
+	printf("enter the flight you are looking for:\n");
 	Flight* flightToSearch=(Flight*)malloc(1*sizeof(Flight));
 	if (!flightToSearch)
 	{
@@ -274,5 +294,32 @@ void	searchBy(Company* pComp, AirportManager* pPort)
 
 void	generalArrayFunction(void* arr, int numOfElements, int sizeOfElement, void	f(void* element))
 {
-	
+	Flight** flights = (Flight**)arr;
+	for (int i = 0; i < numOfElements; i++)
+	{
+		f(flights[i]);
+	}
+}
+
+void	wtireCompanyToFile(Company* pComp, FILE* fp)
+{
+	int len = strlen(pComp->name)+1;
+
+	if (fwrite(&len, sizeof(int), 1, fp) != 1)
+		return;
+
+	if (fwrite(pComp->name, sizeof(char), strlen(pComp->name)+1, fp) != strlen(pComp->name) + 1)
+		return;
+
+	if (fwrite(&pComp->flightCount, sizeof(int), 1, fp) != 1)
+		return;
+
+	if (fwrite(&pComp->sorted, sizeof(int), 1, fp) != 1)
+		return;
+
+	for (int i = 0; i < pComp->flightCount; i++)
+	{
+		writeFlightToFile(pComp->flightArr[i], fp);
+	}
+
 }

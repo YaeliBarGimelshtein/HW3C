@@ -26,6 +26,6 @@ int compareFlightsbyHour(const void* o1, const void* o2);
 int compareFlightsByDestCode(const void* o1, const void* o2);
 int compareFlightsByOriginCode(const void* o1, const void* o2);
 int compareFlightsByDate(const void* o1, const void* o2);
-
+void writeFlightToFile(Flight* flight, FILE* fp);
 
 #endif

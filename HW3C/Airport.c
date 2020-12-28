@@ -134,3 +134,10 @@ int compareAirportsByCode(const Airport* pPort1, const Airport* pPort2)
 {
 	return strcmp(pPort1->code, pPort2->code);	
 }
+
+void writeAirportToFile(Airport* pPort, FILE* fp)
+{
+	fprintf(fp,"%s\n", pPort->name);
+	fprintf(fp, "%s\n", pPort->country);
+	fprintf(fp, "%s\n", pPort->code);
+}

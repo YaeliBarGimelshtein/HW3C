@@ -148,3 +148,24 @@ int compareFlightsByDate(const void* o1, const void* o2)
 
 	return -1;
 }
+
+void writeFlightToFile(Flight* flight, FILE* fp)
+{
+	if (fwrite(flight->originCode,sizeof(char) , CODE_LENGTH + 1, fp)!= CODE_LENGTH + 1)
+		return;
+
+	if (fwrite(flight->destCode, sizeof(char), CODE_LENGTH + 1, fp) != CODE_LENGTH + 1)
+		return;
+
+	if (fwrite(&flight->hour, sizeof(int), 1, fp) != 1)
+		return;
+
+	if (fwrite(&flight->date.day, sizeof(int), 1, fp) != 1)
+		return;
+
+	if (fwrite(&flight->date.month, sizeof(int), 1, fp) != 1)
+		return;
+
+	if (fwrite(&flight->date.year, sizeof(int), 1, fp) != 1)
+		return;
+}

@@ -5,7 +5,6 @@
 #include "Flight.h"
 #include "AirportManager.h"
 
-
 typedef enum
 {
 	eNotSorted, eHourSort, eDateSort,eDestenationCodeSort, eOriginCodeSort,eNumOfChoises
@@ -34,6 +33,7 @@ void	sortBy(Company* pComp);
 void	searchBy(Company* pComp, AirportManager* pPort);
 Flight** findFlight(Flight* key, Company* pComp, int(*compareFunc)(const void*, const void*));
 void	generalArrayFunction(void* arr, int numOfElements, int sizeOfElement, void	f(void* element));
+void	wtireCompanyToFile(Company* pComp, FILE* fp);
 
 #endif
 

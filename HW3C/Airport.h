@@ -20,5 +20,6 @@ void	changeEvenWord(char* str);
 void    getAirportCode(char* code);
 void	freeAirport(Airport* pPort);
 int		compareAirportsByCode(const Airport* pPort1, const Airport* pPort2);
+void	writeAirportToFile(Airport* pPort, FILE* fp);
 
 #endif

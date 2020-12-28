@@ -22,14 +22,13 @@ int	initManager(AirportManager* pManager)
 		return 1;
 
 
-	Airport* helper = (Airport*)malloc(count * sizeof(Airport));
-	if (helper == NULL)
-		return 0;
-
 	for (int i = 0; i < count; i++)
 	{
-		setAirport(&helper[i], pManager);
-		if (L_SortInsert(&pManager->arr.head, &helper[i], compareAirportsByCode) == NULL)
+		Airport* helper = (Airport*)malloc(1 * sizeof(Airport));
+		if (helper == NULL)
+			return 0;
+		setAirport(helper, pManager);
+		if (L_SortInsert(&pManager->arr.head, helper, compareAirportsByCode) == NULL)
 			return 0;
 	}
 	pManager->count = count;
@@ -46,17 +45,18 @@ int		initManagerFromFile(AirportManager* pManager, FILE* fp)
 	L_init(&pManager->arr);
 	char clean='a';
 	fscanf(fp, "%c", &clean);
-	Airport* helper = (Airport*)malloc(pManager->count * sizeof(Airport));
-	if (helper == NULL)
-		return 0;
+	
 
 	for (int i = 0; i < pManager->count; i++)
 	{
-		int result=setAirportFromFile(&helper[i],fp);
+		Airport* helper = (Airport*)malloc(1 * sizeof(Airport));
+		if (helper == NULL)
+			return 0;
+		int result=setAirportFromFile(helper,fp);
 		if (!result)
 			return 0;
 		
-		if (L_SortInsert(&pManager->arr.head, &helper[i], compareAirportsByCode) == NULL)
+		if (L_SortInsert(&pManager->arr.head, helper, compareAirportsByCode) == NULL)
 			return 0;
 	}
 	return 1;
@@ -64,7 +64,6 @@ int		initManagerFromFile(AirportManager* pManager, FILE* fp)
 
 int setAirportFromFile(Airport* airport,FILE* fp)
 {
-	
 	airport->name=getStrExactNameFromFile( MAX_STR_LEN, fp);
 	airport->country=getStrExactNameFromFile(MAX_STR_LEN, fp);
 	int res=fscanf(fp, "%s", airport->code);
@@ -144,4 +143,18 @@ void	printAirports(const AirportManager* pManager)
 void	freeManager(AirportManager* pManager)
 {
 	L_free(&pManager->arr,freeAirport);
+}
+
+
+void writeManagerToFile(AirportManager* pManage, FILE* fp)
+{
+	fprintf(fp,"%d\n", pManage->count);
+	
+	NODE* first = pManage->arr.head.next;
+
+	for (int i = 0; i < pManage->count; i++)
+	{
+		writeAirportToFile(first->key, fp);
+		first = first->next;
+	}
 }

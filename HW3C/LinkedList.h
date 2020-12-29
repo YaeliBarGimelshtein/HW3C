@@ -24,6 +24,7 @@ NODE* L_SortInsert(NODE* head, DATA value, int(*compareFunc)(const void*, const 
 int L_delete(NODE* pNode, void(*freeFunc)(void*)); // erase node *pNode
 int L_free(LIST* pList, void(*freeFunc)(void*)); // free list memory
 int L_print(const LIST* pList, void(*print)(const void*)); // print the list content
+NODE* L_find(NODE* pNode, DATA Value, int(*compare)(const void*, const void*));
 
 
 

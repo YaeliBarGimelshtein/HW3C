@@ -40,6 +40,10 @@ int	initCompanyFromFile(Company* pComp, FILE* fp)
 	if (pComp->flightArr == NULL)
 		return 0;
 	
+
+	char dateStr[MAX_STR_LEN];
+
+
 	for (int i = 0; i < pComp->flightCount; i++)
 	{
 		pComp->flightArr[i]= (Flight*)malloc(pComp->flightCount * sizeof(Flight));
@@ -49,20 +53,40 @@ int	initCompanyFromFile(Company* pComp, FILE* fp)
 			return 0;
 	}
 
-	char dateStr[MAX_STR_LEN];
-	for (int i = 0; i < pComp->flightCount - 1; i++)
+	
+	
+	if (pComp->flightCount == 1)
 	{
-		for (int j=0; j < pComp->flightCount - 1; j++)
-		{
-			if (compareDate(&pComp->flightArr[pComp->flightCount - 1]->date, &pComp->flightArr[i]->date) != 0)
-				
-				sprintf(dateStr, "%d/%d/%d", pComp->flightArr[pComp->flightCount - 1]->date.day,
-				pComp->flightArr[pComp->flightCount - 1]->date.month,
-				pComp->flightArr[pComp->flightCount - 1]->date.year);
-
-				L_insert(&pComp->allDates.head, getDynStr(dateStr));
-		}
+		sprintf(dateStr, "%d/%d/%d", pComp->flightArr[pComp->flightCount - 1]->date.day,
+			pComp->flightArr[pComp->flightCount - 1]->date.month,
+			pComp->flightArr[pComp->flightCount - 1]->date.year);
+		L_insert(&pComp->allDates.head, getDynStr(dateStr));
+		return 1;
 	}
+		
+	int counter = 0;
+	
+	for (int i = 0; i < pComp->flightCount; i++)
+	{
+		for (int j=0; j < i; j++)
+		{
+			if (compareDate(&pComp->flightArr[i]->date, &pComp->flightArr[j]->date) != 0)
+			{
+				counter++;
+			}
+		}
+		if (counter ==i)
+		{
+			sprintf(dateStr, "%d/%d/%d", pComp->flightArr[i]->date.day,
+				pComp->flightArr[i]->date.month,
+				pComp->flightArr[i]->date.year);
+
+			L_insert(&pComp->allDates.head, getDynStr(dateStr));
+		}
+		counter = 0;
+	}
+
+
 
 	return 1;
 }
@@ -294,10 +318,9 @@ void	searchBy(Company* pComp, AirportManager* pPort)
 
 void	generalArrayFunction(void* arr, int numOfElements, int sizeOfElement, void	f(void* element))
 {
-	Flight** flights = (Flight**)arr;
 	for (int i = 0; i < numOfElements; i++)
 	{
-		f(flights[i]);
+		f(*(char*)arr + i * sizeOfElement);
 	}
 }
 

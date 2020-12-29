@@ -125,3 +125,20 @@ int L_print(const LIST* pList, void(*print)(const void*))
 	
 	return c;
 }
+
+NODE* L_find(NODE* pNode, DATA Value, int(*compare)(const void*,const void*))
+{
+	NODE* tmp;
+
+	if (!pNode)
+		return NULL;
+
+	tmp = pNode->next; //first in list
+
+	while (tmp!=NULL && (compare(tmp->key, Value)!=0))
+	{
+		tmp = tmp->next;
+	}
+
+	return tmp;
+}

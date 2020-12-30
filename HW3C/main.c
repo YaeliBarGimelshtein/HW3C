@@ -112,9 +112,6 @@ int main()
 	freeManager(&manager);
 	freeCompany(&company);
 
-
-
-
 	return 1;
 }
 

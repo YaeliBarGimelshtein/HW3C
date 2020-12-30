@@ -85,9 +85,6 @@ int	initCompanyFromFile(Company* pComp, FILE* fp)
 		}
 		counter = 0;
 	}
-
-
-
 	return 1;
 }
 
@@ -120,7 +117,6 @@ int	addFlight(Company* pComp, const AirportManager* pManager)
 	sprintf(dateStr, "%d/%d/%d", pComp->flightArr[pComp->flightCount-1]->date.day,
 		pComp->flightArr[pComp->flightCount - 1]->date.month,
 		pComp->flightArr[pComp->flightCount - 1]->date.year);
-
 	
 	L_insert(&pComp->allDates.head, getDynStr(dateStr));
 	
@@ -240,7 +236,7 @@ Flight**	findFlight(Flight* key,Company* pComp, int(*compareFunc)(const void*, c
 }
 
 
-void	searchBy(Company* pComp, AirportManager* pPort)
+void	searchBy(Company* pComp)
 {
 	if (pComp->flightCount == 0)
 	{
@@ -254,7 +250,6 @@ void	searchBy(Company* pComp, AirportManager* pPort)
 		return;
 	}
 
-	//printf("enter the flight you are looking for:\n");
 	Flight* flightToSearch=(Flight*)malloc(1*sizeof(Flight));
 	if (!flightToSearch)
 	{
@@ -262,8 +257,7 @@ void	searchBy(Company* pComp, AirportManager* pPort)
 		return;
 	}
 		
-	//initFlight(flightToSearch, pPort);
-
+	
 	Flight** answer;
 	
 	switch (pComp->sorted)
@@ -326,6 +320,7 @@ void	searchBy(Company* pComp, AirportManager* pPort)
 		}
 		break;
 	}
+	free(flightToSearch);
 }
 
 void	generalArrayFunction(void* arr, int numOfElements, int sizeOfElement, void	f(void* element))

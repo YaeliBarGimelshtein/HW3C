@@ -254,7 +254,7 @@ void	searchBy(Company* pComp, AirportManager* pPort)
 		return;
 	}
 
-	printf("enter the flight you are looking for:\n");
+	//printf("enter the flight you are looking for:\n");
 	Flight* flightToSearch=(Flight*)malloc(1*sizeof(Flight));
 	if (!flightToSearch)
 	{
@@ -262,55 +262,67 @@ void	searchBy(Company* pComp, AirportManager* pPort)
 		return;
 	}
 		
-	initFlight(flightToSearch, pPort);
+	//initFlight(flightToSearch, pPort);
 
 	Flight** answer;
 	
 	switch (pComp->sorted)
 	{
 	case eHourSort:
+		printf("Enter the hour of flight:\n");
+		scanf("%d", &flightToSearch->hour);
 		answer = findFlight(flightToSearch,pComp, compareFlightsbyHour);
 		if (!answer)
 			printf("flight not found\n");
 		else
 		{
 			printf("here is your flight\n");
-			printFlight(*answer);
+			printFlight(answer);
 		}
 		
 		break;
 
 	case eDateSort:
+		printf("Enter the day of flight:\n");
+		scanf("%d", &flightToSearch->date.day);
+		printf("Enter the month of flight:\n");
+		scanf("%d", &flightToSearch->date.month);
+		printf("Enter the year of flight:\n");
+		scanf("%d", &flightToSearch->date.year);
 		answer = findFlight(flightToSearch, pComp, compareFlightsByDate);
 		if (!answer)
 			printf("flight not found\n");
 		else
 		{
 			printf("here is your flight\n");
-			printFlight(*answer);
+			printFlight(answer);
 		}
 		
 		break;
 
 	case eDestenationCodeSort:
+		printf("Enter the destenation code of flight:\n");
+		scanf("%s", flightToSearch->destCode);
 		answer = findFlight(flightToSearch, pComp, compareFlightsByDestCode);
 		if (!answer)
 			printf("flight not found\n");
 		else
 		{
 			printf("here is your flight\n");
-			printFlight(*answer);
+			printFlight(answer);
 		}
 		break;
 
 	case eOriginCodeSort:
+		printf("Enter the origin code of flight:\n");
+		scanf("%s", flightToSearch->originCode);
 		answer = findFlight(flightToSearch, pComp, compareFlightsByOriginCode);
 		if (!answer)
 			printf("flight not found\n");
 		else
 		{
 			printf("here is your flight\n");
-			printFlight(*answer);
+			printFlight(answer);
 		}
 		break;
 	}

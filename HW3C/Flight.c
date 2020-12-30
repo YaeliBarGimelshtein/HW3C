@@ -60,8 +60,9 @@ int	countFlightsInRoute(Flight** arr, int size, const char* codeSource,
 	return count;
 }
 
-void	printFlight(const Flight* pFlight)
+void	printFlight(const void* pFlightVoid)
 {
+	Flight* pFlight = *(Flight**)pFlightVoid;
 	printf("Flight From %s To %s\t", pFlight->originCode, pFlight->destCode);
 	printDate(&pFlight->date);
 	printf("Hour: %d\n", pFlight->hour);
@@ -95,8 +96,9 @@ Airport* setAiportToFlight(const AirportManager* pManager, const char* msg)
 
 }
 
-void	freeFlight(Flight* pFlight)
+void	freeFlight(void* pFlightVoid)
 {
+	Flight* pFlight = *(Flight**)pFlightVoid;
 	free(pFlight);
 }
 

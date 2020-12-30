@@ -168,12 +168,12 @@ void printFlightsCount(const Company* pComp)
 
 void	printFlightArr(Flight** pFlight, int size)
 {
-	generalArrayFunction(pFlight, size, sizeof(Flight*), printFlight);
+	generalArrayFunction(pFlight, size, sizeof(Flight**), printFlight);
 }
 
-void	freeFlightArr(Flight** arr, int size)
+void	freeFlightArr(Flight** pFlight, int size)
 {
-	generalArrayFunction(arr, size, sizeof(Flight*), freeFlight);
+	generalArrayFunction(pFlight, size, sizeof(Flight**), freeFlight);
 }
 
 void	freeCompany(Company* pComp)
@@ -318,10 +318,9 @@ void	searchBy(Company* pComp, AirportManager* pPort)
 
 void	generalArrayFunction(void* arr, int numOfElements, int sizeOfElement, void	f(void* element))
 {
-	Flight** arrFlights = (Flight**)arr;
 	for (int i = 0; i < numOfElements; i++)
 	{
-		f(arrFlights[i]);
+		f((char*)arr+i*sizeOfElement);
 	}
 }
 

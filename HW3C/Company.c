@@ -318,9 +318,10 @@ void	searchBy(Company* pComp, AirportManager* pPort)
 
 void	generalArrayFunction(void* arr, int numOfElements, int sizeOfElement, void	f(void* element))
 {
+	Flight** arrFlights = (Flight**)arr;
 	for (int i = 0; i < numOfElements; i++)
 	{
-		f(*(char*)arr + i * sizeOfElement);
+		f(arrFlights[i]);
 	}
 }
 

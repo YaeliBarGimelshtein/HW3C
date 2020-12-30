@@ -46,7 +46,7 @@ int	initCompanyFromFile(Company* pComp, FILE* fp)
 
 	for (int i = 0; i < pComp->flightCount; i++)
 	{
-		pComp->flightArr[i]= (Flight*)malloc(pComp->flightCount * sizeof(Flight));
+		pComp->flightArr[i]= (Flight*)malloc(1 * sizeof(Flight));
 		if (!pComp->flightArr[i])
 			return 0;
 		if (initFlightFromFile(pComp->flightArr[i], fp) == 0)
